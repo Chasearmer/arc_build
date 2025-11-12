@@ -1,0 +1,58 @@
+from arc.state import Item
+
+AUGMENTS: list[Item] = [
+    {
+        "id": "a_looting_mk_1",
+        "name": "Looting Mk. 1",
+        "category": "Augment",
+        "icon": "locate-fixed",
+        "image": "/items/a_looting_mk_1.png",
+        "resources": [
+            {"resource": "r_rubber_parts", "quantity": 6},
+            {"resource": "r_plastic_parts", "quantity": 6},
+        ],
+        "tier_resources": {},
+        "rarity": "Uncommon",
+        "backpack_slots": 18,
+        "safe_pocket_slots": 1,
+        "quick_use_slots": 4,
+        "max_shield": "light_shield",
+        "stack_size": 1,
+    },
+    {
+        "id": "a_combat_mk_1",
+        "name": "Combat Mk. 1",
+        "category": "Augment",
+        "icon": "locate-fixed",
+        "image": "/items/a_combat_mk_1.png",
+        "resources": [
+            {"resource": "r_rubber_parts", "quantity": 6},
+            {"resource": "r_plastic_parts", "quantity": 6},
+        ],
+        "tier_resources": {},
+        "rarity": "Uncommon",
+        "backpack_slots": 16,
+        "safe_pocket_slots": 1,
+        "quick_use_slots": 4,
+        "max_shield": "medium_shield",
+        "stack_size": 1,
+    },
+    {
+        "id": "a_tactical_mk_1",
+        "name": "Tactical Mk. 1",
+        "category": "Augment",
+        "icon": "locate-fixed",
+        "image": "/items/a_tactical_mk_1.png",
+        "resources": [
+            {"resource": "r_rubber_parts", "quantity": 6},
+            {"resource": "r_plastic_parts", "quantity": 6},
+        ],
+        "tier_resources": {},
+        "rarity": "Uncommon",
+        "backpack_slots": 15,
+        "safe_pocket_slots": 1,
+        "quick_use_slots": 5,
+        "max_shield": "medium_shield",
+        "stack_size": 1,
+    },
+]
