@@ -420,8 +420,7 @@ WEAPONS: list[Item] = [
     "max_shield": None,
     "stack_size": 1,
 },
-[
-  {
+{
     "id": "w_tempest",
     "name": "Tempest",
     "category": "Weapon",
@@ -447,7 +446,12 @@ WEAPONS: list[Item] = [
         { "resource": "r_medium_gun_parts", "quantity": 3}
       ],
     },
-    "rarity": "Epic"
+    "rarity": "Epic",
+    "backpack_slots": None,
+    "safe_pocket_slots": None,
+    "quick_use_slots": None,
+    "max_shield": None,
+    "stack_size": 1
   },
   {
     "id": "w_bettina",
@@ -475,7 +479,12 @@ WEAPONS: list[Item] = [
         { "resource": "r_heavy_gun_parts", "quantity": 2}
       ],
     },
-    "rarity": "Epic"
+    "rarity": "Epic",
+    "backpack_slots": None,
+    "safe_pocket_slots": None,
+    "quick_use_slots": None,
+    "max_shield": None,
+    "stack_size": 1
   },
   {
     "id": "w_bobcat",
@@ -503,7 +512,12 @@ WEAPONS: list[Item] = [
         { "resource": "r_light_gun_parts", "quantity": 3},
       ],
     },
-    "rarity": "Epic"
+    "rarity": "Epic",
+    "backpack_slots": None,
+    "safe_pocket_slots": None,
+    "quick_use_slots": None,
+    "max_shield": None,
+    "stack_size": 1
   },
   {
     "id": "w_vulcano",
@@ -531,7 +545,12 @@ WEAPONS: list[Item] = [
         { "resource": "r_heavy_gun_parts", "quantity": 3},
       ],
     },
-    "rarity": "Epic"
+    "rarity": "Epic",
+    "backpack_slots": None,
+    "safe_pocket_slots": None,
+    "quick_use_slots": None,
+    "max_shield": None,
+    "stack_size": 1
   },
   {
     "id": "w_hullcracker",
@@ -559,9 +578,13 @@ WEAPONS: list[Item] = [
         { "resource": "r_heavy_gun_parts", "quantity": 3},
       ],
     },
-    "rarity": "Epic"
-  }
-]
+    "rarity": "Epic",
+    "backpack_slots": None,
+    "safe_pocket_slots": None,
+    "quick_use_slots": None,
+    "max_shield": None,
+    "stack_size": 1
+  },
 ]
 
 SHIELDS: list[Item] = [
