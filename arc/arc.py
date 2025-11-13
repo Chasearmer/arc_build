@@ -1,4 +1,5 @@
 import reflex as rx
+import reflex_enterprise as rxe
 from arc.state import CalculatorState
 from arc.components.item_card import item_card
 from arc.components.sidebar import resource_summary_sidebar
@@ -71,7 +72,8 @@ def preset_button(text: str, on_click: rx.event.EventType) -> rx.Component:
 def index() -> rx.Component:
     """The main page of the resource calculator."""
     categories = ["All", "Weapon", "Augment", "Shield", "Healing", "Trap"]
-    return rx.el.div(
+    return rxe.dnd.provider(
+        rx.el.div(
         rx.window_event_listener(
             on_key_down=lambda event: rx.call_script(
                 "(e) => { if (e.key === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); return 'focus_search'; } if (e.key === 'Escape') { return 'handle_escape'; } return null; }",
@@ -133,10 +135,9 @@ def index() -> rx.Component:
             class_name="flex flex-1 bg-white font-['Roboto'] overflow-hidden",
         ),
         class_name="flex flex-col h-screen bg-white font-['Roboto']",
+        ),
     )
 
-
-import reflex_enterprise as rxe
 
 app = rxe.App(
     theme=rx.theme(appearance="light"),

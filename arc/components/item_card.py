@@ -4,7 +4,10 @@ from arc.components.tier_selector import tier_selector
 
 
 def item_card(item: Item, key: str | int | None = None) -> rx.Component:
-    """A compact card that displays just the item image with hover popup."""
+    """A compact card that displays just the item image with hover popup.
+    
+    This is a click-only card (not draggable). Items in the loadout panel are draggable.
+    """
     rarity_color = CalculatorState.rarity_colors.get(item["rarity"], "text-gray-500")
     selected_tier = CalculatorState.selected_weapon_tiers.get(item["id"], 1)
     
