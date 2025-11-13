@@ -216,5 +216,5 @@ def resource_summary_sidebar() -> rx.Component:
             ),
             class_name="flex-grow overflow-y-auto",
         ),
-        class_name="w-1/3 bg-gray-50 border-l border-gray-200 flex-shrink-0 flex flex-col h-screen sticky top-0",
+        class_name="w-1/4 bg-gray-50 border-l border-gray-200 flex-shrink-0 flex flex-col h-screen sticky top-0",
     )

@@ -3,6 +3,7 @@ from arc.state import CalculatorState
 from arc.components.item_card import item_card
 from arc.components.sidebar import resource_summary_sidebar
 from arc.components.loadout_panel import loadout_panel
+from arc.components.dnd_demo import dnd_demo_panel
 
 
 def page_header() -> rx.Component:
@@ -122,16 +123,22 @@ def index() -> rx.Component:
                     ),
                     class_name="flex flex-col flex-1 bg-white overflow-hidden",
                 ),
-                class_name="flex flex-col w-2/3",
+                class_name="flex flex-col w-1/2",
             ),
             resource_summary_sidebar(),
+            rx.el.aside(
+                dnd_demo_panel(),
+                class_name="w-1/4 bg-gray-50 border-l border-gray-200 flex-shrink-0 flex flex-col h-screen sticky top-0 overflow-hidden",
+            ),
             class_name="flex flex-1 bg-white font-['Roboto'] overflow-hidden",
         ),
         class_name="flex flex-col h-screen bg-white font-['Roboto']",
     )
 
 
-app = rx.App(
+import reflex_enterprise as rxe
+
+app = rxe.App(
     theme=rx.theme(appearance="light"),
     head_components=[
         rx.el.link(rel="preconnect", href="https://fonts.googleapis.com"),

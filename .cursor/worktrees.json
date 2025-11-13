@@ -1,0 +1,7 @@
+{
+  "setup-worktree": [
+    "npm install",
+    "conda activate arc",
+    "pip install -r requirements.txt"
+  ]
+}
