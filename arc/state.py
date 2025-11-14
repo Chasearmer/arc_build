@@ -422,12 +422,17 @@ class CalculatorState(rx.State):
         # Clear source FIRST to avoid index shifting issues when moving within same list
         source_slot_type = item_data.get("source_slot_type")
         source_position = item_data.get("source_position")
+        
         if source == "loadout" and source_slot_type and source_position is not None:
             # Only clear source if it's different from destination
             if not (source_slot_type == slot_type and source_position == position):
-                # Adjust destination position if we're removing from same list before the destination
+                # For multi-slot types (backpack, quick_use, safe_pocket), don't adjust position
+                # because they use sparse lists with None placeholders
                 if source_slot_type == slot_type and source_position < position:
-                    position = position - 1
+                    # Only adjust for single-item slots, not multi-slot lists
+                    if slot_type not in ["backpack", "quick_use", "safe_pocket"]:
+                        position = position - 1
+                
                 self._clear_source_slot(source_slot_type, source_position)
         
         # Now add to destination
