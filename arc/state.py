@@ -1,5 +1,6 @@
 import reflex as rx
 from typing import TypedDict, Literal, cast
+from arc.dnd_config import DRAG_TYPES, SLOT_ACCEPTANCE_RULES, SlotType
 
 Rarity = Literal["Common", "Uncommon", "Rare", "Epic", "Legendary"]
 ResourceType = Literal["basic", "refined"]
@@ -49,6 +50,18 @@ class LoadoutItem(TypedDict):
     item_id: str
     quantity: int
     tier: int | None
+
+
+from pydantic import BaseModel
+
+
+class LoadoutSlot(BaseModel):
+    """Represents a single loadout slot with optional item."""
+    item_id: str | None = None
+    quantity: int = 1
+    tier: int | None = None
+    slot_type: SlotType = "backpack"
+    position: int = 0
 
 
 from arc.items_data import ITEMS
@@ -182,9 +195,15 @@ class CalculatorState(rx.State):
         category = item["category"]
         
         if category == "Augment":
-            self.loadout_augment = item_id
+            if not self.loadout_augment:
+                self.loadout_augment = item_id
+            elif len(self.loadout_backpack) < self.max_backpack_slots:
+                self.loadout_backpack.append({"item_id": item_id, "quantity": 1, "tier": None})
         elif category == "Shield":
-            self.loadout_shield = item_id
+            if not self.loadout_shield:
+                self.loadout_shield = item_id
+            elif len(self.loadout_backpack) < self.max_backpack_slots:
+                self.loadout_backpack.append({"item_id": item_id, "quantity": 1, "tier": None})
         elif category == "Weapon":
             tier = self.selected_weapon_tiers.get(item_id, 1)
             if not self.loadout_weapon_1:
@@ -366,6 +385,132 @@ class CalculatorState(rx.State):
         if item and item["category"] == "Weapon":
             return item["tier_resources"].get(tier, [])
         return []
+    
+    def get_item_by_id(self, item_id: str | None) -> Item | None:
+        """Returns an item by its ID."""
+        if not item_id:
+            return None
+        return next((i for i in self.all_items if i["id"] == item_id), None)
+    
+    def _is_valid_drop(self, item_category: str, slot_type: str) -> bool:
+        """Validates if an item category can be dropped into a slot type."""
+        drag_type = DRAG_TYPES.get(item_category)
+        accepted_types = SLOT_ACCEPTANCE_RULES.get(slot_type, [])
+        return drag_type in accepted_types if drag_type else False
+    
+    @rx.event
+    def handle_drop_to_slot(self, slot_type: str, position: int, item_data: dict):
+        """
+        Handles dropping an item into a specific slot.
+        
+        Args:
+            slot_type: Type of slot (augment, shield, weapon, backpack, quick_use, safe_pocket)
+            position: Position within slot type (0 for single slots, index for multi-slots)
+            item_data: Data from the dragged item containing item_id, category, source info, etc.
+        """
+        item_id = item_data.get("item_id")
+        source = item_data.get("source")
+        
+        item = self.get_item_by_id(item_id)
+        if not item:
+            return
+        
+        if not self._is_valid_drop(item["category"], slot_type):
+            return
+        
+        # Clear source FIRST to avoid index shifting issues when moving within same list
+        source_slot_type = item_data.get("source_slot_type")
+        source_position = item_data.get("source_position")
+        if source == "loadout" and source_slot_type and source_position is not None:
+            # Only clear source if it's different from destination
+            if not (source_slot_type == slot_type and source_position == position):
+                # Adjust destination position if we're removing from same list before the destination
+                if source_slot_type == slot_type and source_position < position:
+                    position = position - 1
+                self._clear_source_slot(source_slot_type, source_position)
+        
+        # Now add to destination
+        if slot_type in ["augment", "shield"]:
+            self._drop_to_single_slot(slot_type, item_id, item_data)
+        elif slot_type == "weapon":
+            self._drop_to_weapon_slot(position, item_id, item_data)
+        elif slot_type in ["backpack", "quick_use", "safe_pocket"]:
+            self._drop_to_multi_slot(slot_type, position, item_id, item_data)
+    
+    def _drop_to_single_slot(self, slot_type: str, item_id: str, item_data: dict):
+        """Drops an item to augment or shield slot."""
+        if slot_type == "augment":
+            self.loadout_augment = item_id
+        elif slot_type == "shield":
+            self.loadout_shield = item_id
+    
+    def _drop_to_weapon_slot(self, position: int, item_id: str, item_data: dict):
+        """Drops a weapon to weapon slot 1 or 2."""
+        tier = item_data.get("tier")
+        if tier is None:
+            tier = self.selected_weapon_tiers.get(item_id, 1)
+        
+        if position == 0:
+            self.loadout_weapon_1 = {"item_id": item_id, "quantity": 1, "tier": tier}
+        elif position == 1:
+            self.loadout_weapon_2 = {"item_id": item_id, "quantity": 1, "tier": tier}
+    
+    def _drop_to_multi_slot(self, slot_type: str, position: int, item_id: str, item_data: dict):
+        """Drops an item to a multi-item slot (backpack, quick_use, safe_pocket)."""
+        if slot_type == "backpack":
+            loadout_list = self.loadout_backpack
+        elif slot_type == "quick_use":
+            loadout_list = self.loadout_quick_use
+        else:
+            loadout_list = self.loadout_safe_pocket
+        
+        # Ensure list is long enough without creating visible empty slots
+        # We'll only add entries up to and including the position we're dropping at
+        while len(loadout_list) <= position:
+            loadout_list.append({"item_id": None, "quantity": 1, "tier": None})
+        
+        quantity = item_data.get("quantity", 1)
+        tier = item_data.get("tier")
+        
+        item = self.get_item_by_id(item_id)
+        if item and item["category"] != "Weapon":
+            tier = None
+        
+        # Set the item at the specific position
+        loadout_list[position] = {"item_id": item_id, "quantity": quantity, "tier": tier}
+        
+        # Clean up trailing None entries to avoid blank slots
+        while loadout_list and loadout_list[-1]["item_id"] is None:
+            loadout_list.pop()
+    
+    def _clear_source_slot(self, slot_type: str, position: int):
+        """Clears the source slot when an item is moved from loadout to loadout."""
+        if slot_type == "augment":
+            self.loadout_augment = None
+        elif slot_type == "shield":
+            self.loadout_shield = None
+        elif slot_type in ["weapon", "weapon_1", "weapon_2"]:
+            # Handle both "weapon" with position and "weapon_1"/"weapon_2" slot names
+            if slot_type == "weapon_1":
+                self.loadout_weapon_1 = None
+            elif slot_type == "weapon_2":
+                self.loadout_weapon_2 = None
+            elif slot_type == "weapon":
+                if position == 0:
+                    self.loadout_weapon_1 = None
+                elif position == 1:
+                    self.loadout_weapon_2 = None
+        elif slot_type in ["backpack", "quick_use", "safe_pocket"]:
+            if slot_type == "backpack":
+                loadout_list = self.loadout_backpack
+            elif slot_type == "quick_use":
+                loadout_list = self.loadout_quick_use
+            else:
+                loadout_list = self.loadout_safe_pocket
+            
+            # Remove the item at this position
+            if position < len(loadout_list):
+                del loadout_list[position]
 
     @rx.var
     def filtered_items(self) -> list[Item]:

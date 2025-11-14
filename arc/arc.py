@@ -1,8 +1,8 @@
 import reflex as rx
+import reflex_enterprise as rxe
 from arc.state import CalculatorState
 from arc.components.sidebar import resource_summary_sidebar
 from arc.components.loadout_panel import loadout_panel
-from arc.components.dnd_demo import dnd_demo_panel
 from arc.components.item_selector import item_selector
 
 
@@ -56,7 +56,13 @@ def preset_button(text: str, on_click: rx.event.EventType) -> rx.Component:
 
 def index() -> rx.Component:
     """The main page of the resource calculator."""
-    return rx.el.div(
+    # Width configuration - adjust these to change the layout ratio
+    # Options: w-1/2, w-2/3, w-3/4, w-4/5, etc.
+    main_content_width = "w-2/3"  # Loadout + Item Selector
+    sidebar_width = "w-1/3"        # Resource Summary
+    
+    return rxe.dnd.provider(
+        rx.el.div(
         rx.window_event_listener(
             on_key_down=lambda event: rx.call_script(
                 "(e) => { if (e.key === 'k' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); return 'focus_search'; } if (e.key === 'Escape') { return 'handle_escape'; } return null; }",
@@ -68,20 +74,15 @@ def index() -> rx.Component:
             rx.el.div(
                 loadout_panel(),
                 item_selector(),
-                class_name="flex flex-col w-1/2",
+                class_name=f"flex flex-col {main_content_width}",
             ),
-            resource_summary_sidebar(),
-            rx.el.aside(
-                dnd_demo_panel(),
-                class_name="w-1/4 bg-gray-50 border-l border-gray-200 flex-shrink-0 flex flex-col h-screen sticky top-0 overflow-hidden",
-            ),
+            resource_summary_sidebar(width_class=sidebar_width),
             class_name="flex flex-1 bg-white font-['Roboto'] overflow-hidden",
         ),
         class_name="flex flex-col h-screen bg-white font-['Roboto']",
+        ),
     )
 
-
-import reflex_enterprise as rxe
 
 app = rxe.App(
     theme=rx.theme(appearance="light"),
