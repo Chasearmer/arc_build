@@ -54,10 +54,10 @@ def item_selector() -> rx.Component:
                 columns="1",
                 gap="4",
                 width="100%",
-                class_name="grid-cols-6 gap-x-4 gap-y-4",
+                class_name="grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4",
             ),
-            class_name="w-full p-6 pt-4 overflow-y-auto flex-1 bg-[#2a2a2a]",
+            class_name="w-full p-6 pt-4 lg:overflow-y-auto lg:flex-1 bg-[#2a2a2a]",
         ),
-        class_name="flex flex-col flex-1 bg-[#2a2a2a] overflow-hidden",
+        class_name="flex flex-col lg:flex-1 bg-[#2a2a2a] lg:overflow-hidden",
     )
 

@@ -8,6 +8,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_kettle.webp",
+    "symbol": "/symbols/s_light_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -40,6 +41,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_ferro.webp",
+    "symbol": "/symbols/s_heavy_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -71,6 +73,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_stitcher.webp",
+    "symbol": "/symbols/s_light_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -103,6 +106,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_rattler.webp",
+    "symbol": "/symbols/s_heavy_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -135,6 +139,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_hairpin.webp",
+    "symbol": "/symbols/s_light_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -166,6 +171,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_anvil.webp",
+    "symbol": "/symbols/s_heavy_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -198,6 +204,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_il_toro.webp",
+    "symbol": "/symbols/s_shotgun_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -230,6 +237,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_arpeggio.webp",
+    "symbol": "/symbols/s_medium_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -262,6 +270,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_burletta.webp",
+    "symbol": "/symbols/s_light_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -294,6 +303,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_venator.png",
+    "symbol": "/symbols/s_medium_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -327,6 +337,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_renegade.webp",
+    "symbol": "/symbols/s_medium_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -360,6 +371,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_torrente.png",
+    "symbol": "/symbols/s_medium_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -393,6 +405,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_osprey.webp",
+    "symbol": "/symbols/s_medium_ammo.webp",
     "resources": [],
     "tier_resources": {
         1: [
@@ -426,6 +439,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_tempest.webp",
+    "symbol": "/symbols/s_medium_ammo.webp",
     "resources": [],
     "tier_resources": {
       1: [
@@ -459,6 +473,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_bettina.webp",
+    "symbol": "/symbols/s_heavy_ammo.webp",
     "resources": [],
     "tier_resources": {
       1: [
@@ -492,6 +507,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_bobcat.webp",
+    "symbol": "/symbols/s_light_ammo.webp",
     "resources": [],
     "tier_resources": {
       1: [
@@ -525,6 +541,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_vulcano.webp",
+    "symbol": "/symbols/s_shotgun_ammo.webp",
     "resources": [],
     "tier_resources": {
       1: [      
@@ -558,6 +575,7 @@ WEAPONS: list[Item] = [
     "category": "Weapon",
     "icon": "locate-fixed",
     "image": "/items/w_hullcracker.webp",
+    "symbol": "/symbols/s_launcher_ammo.webp",
     "resources": [],
     "tier_resources": {
       1: [
@@ -589,11 +607,12 @@ WEAPONS: list[Item] = [
 
 SHIELDS: list[Item] = [
     {
-        "id": "s_light_shield",
+        "id": "sh_light_shield",
         "name": "Light Shield",
         "category": "Shield",
         "icon": "shield-half",
-        "image": "/items/s_light_shield.png",
+        "image": "/items/sh_light_shield.png",
+        "symbol": "/symbols/s_shield.webp",
         "resources": [
             {"resource": "r_arc_alloy", "quantity": 2},
             {"resource": "r_plastic_parts", "quantity": 4},
@@ -615,6 +634,7 @@ HEALING: list[Item] = [
         "category": "Healing",
         "icon": "bandage",
         "image": "/items/h_bandage.png",
+        "symbol": "/symbols/s_healing.webp",
         "resources": [
             {"resource": "r_fabric", "quantity": 5},
         ],
@@ -635,6 +655,7 @@ TRAPS: list[Item] = [
         "category": "Trap",
         "icon": "battery-charging",
         "image": "/items/t_jolt_mine.png",
+        "symbol": "/symbols/s_trap.webp",
         "resources": [
             {"resource": "r_electrical_components", "quantity": 1},
             {"resource": "r_battery", "quantity": 1},

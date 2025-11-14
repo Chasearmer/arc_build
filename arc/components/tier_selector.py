@@ -16,12 +16,12 @@ def tier_selector(item_id: str) -> rx.Component:
                 ),
                 class_name=rx.cond(
                     selected_tier == index + 1,
-                    "w-8 h-8 text-xs font-bold text-white bg-[#22BFFB] rounded-md",
-                    "w-8 h-8 text-xs font-semibold text-white bg-[#5D605D] rounded-md hover:bg-[#3DEB58]",
+                    "w-5 h-5 sm:w-6 sm:h-6 md:w-6 md:h-6 text-[9px] sm:text-[10px] font-bold text-white bg-[#22BFFB] rounded-md",
+                    "w-5 h-5 sm:w-6 sm:h-6 md:w-6 md:h-6 text-[9px] sm:text-[10px] font-semibold text-white bg-[#5D605D] rounded-md hover:bg-[#3DEB58]",
                 ),
                 size="1",
             ),
         ),
-        class_name="flex items-center gap-1.5",
+        class_name="flex items-center gap-0.5 sm:gap-1",
         on_click=rx.stop_propagation,
     )

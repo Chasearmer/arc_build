@@ -56,11 +56,6 @@ def preset_button(text: str, on_click: rx.event.EventType) -> rx.Component:
 
 def index() -> rx.Component:
     """The main page of the resource calculator."""
-    # Width configuration - adjust these to change the layout ratio
-    # Options: w-1/2, w-2/3, w-3/4, w-4/5, etc.
-    main_content_width = "w-2/3"  # Loadout + Item Selector
-    sidebar_width = "w-1/3"        # Resource Summary
-    
     return rxe.dnd.provider(
         rx.el.div(
         rx.window_event_listener(
@@ -74,12 +69,12 @@ def index() -> rx.Component:
             rx.el.div(
                 loadout_panel(),
                 item_selector(),
-                class_name=f"flex flex-col {main_content_width}",
+                class_name="flex flex-col w-full lg:w-2/3 lg:overflow-hidden",
             ),
-            resource_summary_sidebar(width_class=sidebar_width),
-            class_name="flex flex-1 bg-[#2a2a2a] font-['Roboto'] overflow-hidden",
+            resource_summary_sidebar(),
+            class_name="flex flex-col lg:flex-row flex-1 bg-[#2a2a2a] font-['Roboto'] overflow-y-auto lg:overflow-hidden",
         ),
-        class_name="flex flex-col h-screen bg-[#2a2a2a] font-['Roboto']",
+        class_name="flex flex-col h-screen bg-[#2a2a2a] font-['Roboto'] overflow-hidden",
         ),
     )
 

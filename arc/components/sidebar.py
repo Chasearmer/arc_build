@@ -130,7 +130,7 @@ def decomposed_resource_card(resource: ResourceDisplay) -> rx.Component:
     )
 
 
-def resource_summary_sidebar(width_class: str = "w-1/4") -> rx.Component:
+def resource_summary_sidebar() -> rx.Component:
     """The sidebar component to display the resource summary."""
     return rx.el.aside(
         rx.el.div(
@@ -216,5 +216,5 @@ def resource_summary_sidebar(width_class: str = "w-1/4") -> rx.Component:
             ),
             class_name="flex-grow overflow-y-auto",
         ),
-        class_name=f"{width_class} bg-[#1a1a1a] border-l border-[#5D605D] flex-shrink-0 flex flex-col h-screen sticky top-0",
+        class_name="w-full lg:w-1/3 bg-[#1a1a1a] border-l border-[#5D605D] flex-shrink-0 flex flex-col lg:h-screen lg:sticky top-0",
     )

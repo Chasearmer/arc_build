@@ -11,19 +11,21 @@ def item_card(item: Item, key: str | int | None = None) -> rx.Component:
     rarity_color = CalculatorState.rarity_colors.get(item["rarity"], "text-gray-500")
     selected_tier = CalculatorState.selected_weapon_tiers.get(item["id"], 1)
     
-    # Map rarity to full border class names
+    # Map rarity to full border class names (no padding - handled internally now)
     card_class = rx.match(
         item["rarity"],
-        ("Common", "group p-3 rounded-xl border-2 border-[#5D605D] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-40"),
-        ("Uncommon", "group p-3 rounded-xl border-2 border-[#3DEB58] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-40"),
-        ("Rare", "group p-3 rounded-xl border-2 border-[#22BFFB] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-40"),
-        ("Epic", "group p-3 rounded-xl border-2 border-[#CB008A] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-40"),
-        ("Legendary", "group p-3 rounded-xl border-2 border-[#F9BC0A] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-40"),
-        "group p-3 rounded-xl border-2 border-[#5D605D] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-40",
+        ("Common", "group rounded-xl border-2 border-[#5D605D] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-32 sm:h-36 md:h-40 overflow-hidden"),
+        ("Uncommon", "group rounded-xl border-2 border-[#3DEB58] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-32 sm:h-36 md:h-40 overflow-hidden"),
+        ("Rare", "group rounded-xl border-2 border-[#22BFFB] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-32 sm:h-36 md:h-40 overflow-hidden"),
+        ("Epic", "group rounded-xl border-2 border-[#CB008A] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-32 sm:h-36 md:h-40 overflow-hidden"),
+        ("Legendary", "group rounded-xl border-2 border-[#F9BC0A] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-32 sm:h-36 md:h-40 overflow-hidden"),
+        "group rounded-xl border-2 border-[#5D605D] bg-[#1a1a1a] shadow-sm cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 flex flex-col h-32 sm:h-36 md:h-40 overflow-hidden",
     )
 
     return rx.el.div(
+        # Padded content area (top 80%)
         rx.el.div(
+            # Main content area with image
             rx.el.div(
                 rx.cond(
                     item["image"],
@@ -34,16 +36,47 @@ def item_card(item: Item, key: str | int | None = None) -> rx.Component:
                     ),
                     rx.icon(item["icon"], size=48, class_name="text-[#22BFFB]"),
                 ),
-                class_name="flex items-center justify-center h-4/5",
+                class_name="flex items-center justify-center flex-1 min-h-0",
             ),
+            # Tier selector for weapons (above the black bar)
+            rx.cond(
+                item["category"] == "Weapon",
+                rx.el.div(
+                    tier_selector(item["id"]),
+                    class_name="flex items-center justify-center py-1 flex-shrink-0",
+                ),
+                rx.fragment(),
+            ),
+            class_name="flex flex-col h-[80%] p-2 sm:p-3",
+        ),
+        # Black bar at bottom with symbol and stack info (bottom 20%, no padding)
+        rx.el.div(
+            # Left side: symbol image
             rx.el.div(
                 rx.cond(
-                    item["category"] == "Weapon",
-                    tier_selector(item["id"]),
+                    item["symbol"],
+                    rx.image(
+                        src=item["symbol"],
+                        alt="symbol",
+                        class_name="h-full w-auto object-contain p-1",
+                    ),
                     rx.fragment(),
                 ),
-                class_name="flex items-center h-1/5",
+                class_name="h-full aspect-square flex items-center justify-center flex-shrink-0",
             ),
+            # Right side: stack count (only show if stack_size > 1)
+            rx.cond(
+                item["stack_size"] > 1,
+                rx.el.div(
+                    rx.el.span(
+                        "x1",
+                        class_name="text-xs font-semibold text-white",
+                    ),
+                    class_name="flex items-center justify-center px-2",
+                ),
+                rx.fragment(),
+            ),
+            class_name="h-[20%] bg-black flex items-center justify-between w-full flex-shrink-0",
         ),
         rx.el.div(
             rx.el.div(

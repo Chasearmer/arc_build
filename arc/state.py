@@ -36,6 +36,7 @@ class Item(TypedDict):
     category: Literal["Weapon", "Augment", "Shield", "Healing", "Trap", "Gear", "Gadget", "Tool"]
     icon: str
     image: str | None
+    symbol: str | None
     resources: list[ResourceCost]
     tier_resources: dict[int, list[ResourceCost]]
     rarity: Rarity
@@ -331,19 +332,19 @@ class CalculatorState(rx.State):
     @rx.var
     def loadout_backpack_items(self) -> list[Item]:
         """Returns list of item objects in backpack."""
-        return [next((i for i in self.all_items if i["id"] == loadout_item["item_id"]), {"id": "", "name": "", "category": "Weapon", "icon": "", "image": None, "resources": [], "tier_resources": {}, "rarity": "Common", "backpack_slots": None, "safe_pocket_slots": None, "quick_use_slots": None, "max_shield": None, "stack_size": 1})
+        return [next((i for i in self.all_items if i["id"] == loadout_item["item_id"]), {"id": "", "name": "", "category": "Weapon", "icon": "", "image": None, "symbol": None, "resources": [], "tier_resources": {}, "rarity": "Common", "backpack_slots": None, "safe_pocket_slots": None, "quick_use_slots": None, "max_shield": None, "stack_size": 1})
                 for loadout_item in self.loadout_backpack]
     
     @rx.var
     def loadout_quick_use_items(self) -> list[Item]:
         """Returns list of item objects in quick use."""
-        return [next((i for i in self.all_items if i["id"] == loadout_item["item_id"]), {"id": "", "name": "", "category": "Weapon", "icon": "", "image": None, "resources": [], "tier_resources": {}, "rarity": "Common", "backpack_slots": None, "safe_pocket_slots": None, "quick_use_slots": None, "max_shield": None, "stack_size": 1})
+        return [next((i for i in self.all_items if i["id"] == loadout_item["item_id"]), {"id": "", "name": "", "category": "Weapon", "icon": "", "image": None, "symbol": None, "resources": [], "tier_resources": {}, "rarity": "Common", "backpack_slots": None, "safe_pocket_slots": None, "quick_use_slots": None, "max_shield": None, "stack_size": 1})
                 for loadout_item in self.loadout_quick_use]
     
     @rx.var
     def loadout_safe_pocket_items(self) -> list[Item]:
         """Returns list of item objects in safe pocket."""
-        return [next((i for i in self.all_items if i["id"] == loadout_item["item_id"]), {"id": "", "name": "", "category": "Weapon", "icon": "", "image": None, "resources": [], "tier_resources": {}, "rarity": "Common", "backpack_slots": None, "safe_pocket_slots": None, "quick_use_slots": None, "max_shield": None, "stack_size": 1})
+        return [next((i for i in self.all_items if i["id"] == loadout_item["item_id"]), {"id": "", "name": "", "category": "Weapon", "icon": "", "image": None, "symbol": None, "resources": [], "tier_resources": {}, "rarity": "Common", "backpack_slots": None, "safe_pocket_slots": None, "quick_use_slots": None, "max_shield": None, "stack_size": 1})
                 for loadout_item in self.loadout_safe_pocket]
 
     @rx.var

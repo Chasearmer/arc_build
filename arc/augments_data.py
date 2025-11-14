@@ -7,6 +7,7 @@ AUGMENTS: list[Item] = [
         "category": "Augment",
         "icon": "locate-fixed",
         "image": "/items/a_looting_mk_1.png",
+        "symbol": "/symbols/s_augment.webp",
         "resources": [
             {"resource": "r_rubber_parts", "quantity": 6},
             {"resource": "r_plastic_parts", "quantity": 6},
@@ -25,6 +26,7 @@ AUGMENTS: list[Item] = [
         "category": "Augment",
         "icon": "locate-fixed",
         "image": "/items/a_combat_mk_1.png",
+        "symbol": "/symbols/s_augment.webp",
         "resources": [
             {"resource": "r_rubber_parts", "quantity": 6},
             {"resource": "r_plastic_parts", "quantity": 6},
@@ -43,6 +45,7 @@ AUGMENTS: list[Item] = [
         "category": "Augment",
         "icon": "locate-fixed",
         "image": "/items/a_tactical_mk_1.png",
+        "symbol": "/symbols/s_augment.webp",
         "resources": [
             {"resource": "r_rubber_parts", "quantity": 6},
             {"resource": "r_plastic_parts", "quantity": 6},
