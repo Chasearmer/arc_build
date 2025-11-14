@@ -96,7 +96,19 @@ def draggable_loadout_item(item: Item, slot_type: str, position: int, index: int
     
     item_content = item_slot_with_item_content(item, slot_type, index, slot_size, quantity, tier, border_color)
     
-    drag_type = DRAG_TYPES.get(item["category"], "ITEM_GEAR")
+    # Use rx.match to dynamically determine drag type based on item category
+    drag_type = rx.match(
+        item["category"],
+        ("Weapon", "ITEM_WEAPON"),
+        ("Augment", "ITEM_AUGMENT"),
+        ("Shield", "ITEM_SHIELD"),
+        ("Healing", "ITEM_HEALING"),
+        ("Trap", "ITEM_TRAP"),
+        ("Gear", "ITEM_GEAR"),
+        ("Gadget", "ITEM_GADGET"),
+        ("Tool", "ITEM_TOOL"),
+        "ITEM_GEAR",  # default
+    )
     
     return rxe.dnd.draggable(
         item_content,
@@ -503,15 +515,13 @@ def quick_use_section() -> rx.Component:
             ),
             class_name="flex items-center gap-2 mb-3",
         ),
-        rx.el.div(
-            rx.grid(
-                drop_target_quick_use_slot(0),
-                rx.cond(CalculatorState.max_quick_use_slots >= 2, drop_target_quick_use_slot(1)),
-                rx.cond(CalculatorState.max_quick_use_slots >= 3, drop_target_quick_use_slot(2)),
-                rx.cond(CalculatorState.max_quick_use_slots >= 4, drop_target_quick_use_slot(3)),
-                columns="3",
-                spacing="2",
-            ),
+        rx.grid(
+            drop_target_quick_use_slot(0),
+            rx.cond(CalculatorState.max_quick_use_slots >= 2, drop_target_quick_use_slot(1)),
+            rx.cond(CalculatorState.max_quick_use_slots >= 3, drop_target_quick_use_slot(2)),
+            rx.cond(CalculatorState.max_quick_use_slots >= 4, drop_target_quick_use_slot(3)),
+            columns="3",
+            spacing="2",
         ),
     )
 

@@ -459,16 +459,10 @@ class CalculatorState(rx.State):
         """Drops an item to a multi-item slot (backpack, quick_use, safe_pocket)."""
         if slot_type == "backpack":
             loadout_list = self.loadout_backpack
-            max_position = 13
         elif slot_type == "quick_use":
             loadout_list = self.loadout_quick_use
-            max_position = 3
         else:
             loadout_list = self.loadout_safe_pocket
-            max_position = 1
-        
-        if position > max_position:
-            return
         
         # Ensure list is long enough without creating visible empty slots
         # We'll only add entries up to and including the position we're dropping at
