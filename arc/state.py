@@ -93,11 +93,11 @@ class CalculatorState(rx.State):
         "Chemicals": "flask-conical",
     }
     rarity_colors: dict[str, str] = {
-        "Common": "text-gray-500",
-        "Uncommon": "text-green-500",
-        "Rare": "text-blue-500",
-        "Epic": "text-pink-500",
-        "Legendary": "text-yellow-500",
+        "Common": "text-gray-400",
+        "Uncommon": "text-[#3DEB58]",
+        "Rare": "text-[#22BFFB]",
+        "Epic": "text-[#CB008A]",
+        "Legendary": "text-[#F9BC0A]",
     }
 
     @rx.event

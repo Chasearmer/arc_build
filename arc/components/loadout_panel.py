@@ -19,8 +19,8 @@ def loadout_tier_selector(slot: str, current_tier: int, index: int | None = None
                     ),
                     class_name=rx.cond(
                         current_tier == tier_index + 1,
-                        "w-6 h-6 text-xs font-bold text-white bg-sky-500 rounded-md",
-                        "w-6 h-6 text-xs font-semibold text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300",
+                        "w-6 h-6 text-xs font-bold text-white bg-[#22BFFB] rounded-md",
+                        "w-6 h-6 text-xs font-semibold text-white bg-[#5D605D] rounded-md hover:bg-[#3DEB58]",
                     ),
                     size="1",
                 ),
@@ -40,7 +40,7 @@ def loadout_tier_selector(slot: str, current_tier: int, index: int | None = None
         return rx.el.div(
             rx.el.span(
                 tier_display,
-                class_name="text-xs font-semibold text-gray-600",
+                class_name="text-xs font-semibold text-white",
             ),
             class_name="flex items-center justify-center",
         )
@@ -58,8 +58,8 @@ def empty_slot(label: str, slot_size: str = "standard") -> rx.Component:
         size_class = "w-20 h-20"
     
     return rx.el.div(
-        rx.el.p(label, class_name="text-xs text-gray-400"),
-        class_name=f"{size_class} border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50",
+        rx.el.p(label, class_name="text-xs text-gray-500"),
+        class_name=f"{size_class} border-2 border-dashed border-[#5D605D] rounded-lg flex items-center justify-center bg-[#1a1a1a]",
     )
 
 
@@ -76,22 +76,22 @@ def draggable_loadout_item(item: Item, slot_type: str, position: int, index: int
     
     border_color_solid = rx.match(
         item["rarity"],
-        ("Common", "gray.400"),
-        ("Uncommon", "green.500"),
-        ("Rare", "blue.500"),
-        ("Epic", "purple.500"),
-        ("Legendary", "yellow.500"),
-        "gray.400",
+        ("Common", "#5D605D"),
+        ("Uncommon", "#3DEB58"),
+        ("Rare", "#22BFFB"),
+        ("Epic", "#CB008A"),
+        ("Legendary", "#F9BC0A"),
+        "#5D605D",
     )
     
     border_color = rx.match(
         item["rarity"],
-        ("Common", "border-gray-400"),
-        ("Uncommon", "border-green-500"),
-        ("Rare", "border-blue-500"),
-        ("Epic", "border-purple-500"),
-        ("Legendary", "border-yellow-500"),
-        "border-gray-400",
+        ("Common", "border-[#5D605D]"),
+        ("Uncommon", "border-[#3DEB58]"),
+        ("Rare", "border-[#22BFFB]"),
+        ("Epic", "border-[#CB008A]"),
+        ("Legendary", "border-[#F9BC0A]"),
+        "border-[#5D605D]",
     )
     
     item_content = item_slot_with_item_content(item, slot_type, index, slot_size, quantity, tier, border_color)
@@ -149,13 +149,13 @@ def item_slot_with_item_content(item: Item, slot_type: str, index: int | None = 
                 rx.cond(
                     tier,
                     loadout_tier_selector(slot_type, tier, index, interactive=True),
-                    rx.el.span("Tier I", class_name="text-xs font-semibold text-gray-600"),
+                    rx.el.span("Tier I", class_name="text-xs font-semibold text-white"),
                 ),
                 on_click=rx.stop_propagation,
                 class_name="h-1/5 flex items-center justify-center px-1",
             ),
             on_click=lambda: CalculatorState.unequip_from_loadout(slot_type, index),
-            class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-white flex flex-col",
+            class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-[#2a2a2a] flex flex-col",
         )
     
     # For backpack slots, check if it's a weapon to show tier display, otherwise show quantity controls
@@ -176,13 +176,13 @@ def item_slot_with_item_content(item: Item, slot_type: str, index: int | None = 
                     rx.cond(
                         tier,
                         loadout_tier_selector(slot_type, tier, index, interactive=False),
-                        rx.el.span("Tier I", class_name="text-xs font-semibold text-gray-600"),
+                        rx.el.span("Tier I", class_name="text-xs font-semibold text-white"),
                     ),
                     on_click=rx.stop_propagation,
                     class_name="h-1/5 flex items-center justify-center px-1",
                 ),
                 on_click=lambda: CalculatorState.unequip_from_loadout(slot_type, index),
-                class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-white flex flex-col",
+                class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-[#2a2a2a] flex flex-col",
             ),
             # Non-weapon in backpack - show quantity controls
             rx.el.div(
@@ -198,22 +198,22 @@ def item_slot_with_item_content(item: Item, slot_type: str, index: int | None = 
                     rx.el.button(
                         "-",
                         on_click=lambda: CalculatorState.decrease_item_quantity(slot_type, index),
-                        class_name="w-4 h-4 text-xs font-bold text-gray-700 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center",
+                        class_name="w-4 h-4 text-xs font-bold text-white bg-[#5D605D] rounded hover:bg-[#3DEB58] flex items-center justify-center",
                     ),
                     rx.el.span(
                         f"x{quantity}",
-                        class_name="text-xs font-semibold text-gray-700",
+                        class_name="text-xs font-semibold text-white",
                     ),
                     rx.el.button(
                         "+",
                         on_click=lambda: CalculatorState.increase_item_quantity(slot_type, index),
-                        class_name="w-4 h-4 text-xs font-bold text-gray-700 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center",
+                        class_name="w-4 h-4 text-xs font-bold text-white bg-[#5D605D] rounded hover:bg-[#3DEB58] flex items-center justify-center",
                     ),
                     on_click=rx.stop_propagation,
                     class_name="h-1/5 flex items-center justify-between gap-1 px-1",
                 ),
                 on_click=lambda: CalculatorState.unequip_from_loadout(slot_type, index),
-                class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-white flex flex-col",
+                class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-[#2a2a2a] flex flex-col",
             ),
         )
     
@@ -232,22 +232,22 @@ def item_slot_with_item_content(item: Item, slot_type: str, index: int | None = 
                 rx.el.button(
                     "-",
                     on_click=lambda: CalculatorState.decrease_item_quantity(slot_type, index),
-                    class_name="w-4 h-4 text-xs font-bold text-gray-700 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center",
+                    class_name="w-4 h-4 text-xs font-bold text-white bg-[#5D605D] rounded hover:bg-[#3DEB58] flex items-center justify-center",
                 ),
                 rx.el.span(
                     f"x{quantity}",
-                    class_name="text-xs font-semibold text-gray-700",
+                    class_name="text-xs font-semibold text-white",
                 ),
                 rx.el.button(
                     "+",
                     on_click=lambda: CalculatorState.increase_item_quantity(slot_type, index),
-                    class_name="w-4 h-4 text-xs font-bold text-gray-700 bg-gray-200 rounded hover:bg-gray-300 flex items-center justify-center",
+                    class_name="w-4 h-4 text-xs font-bold text-white bg-[#5D605D] rounded hover:bg-[#3DEB58] flex items-center justify-center",
                 ),
                 on_click=rx.stop_propagation,
                 class_name="h-1/5 flex items-center justify-between gap-1 px-1",
             ),
             on_click=lambda: CalculatorState.unequip_from_loadout(slot_type, index),
-            class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-white flex flex-col",
+            class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-[#2a2a2a] flex flex-col",
         )
     
     # For other equipment slots (augment, shield)
@@ -259,7 +259,7 @@ def item_slot_with_item_content(item: Item, slot_type: str, index: int | None = 
                 class_name="w-full h-full object-contain",
             ),
             on_click=lambda: CalculatorState.unequip_from_loadout(slot_type, index),
-            class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-white",
+            class_name=f"{size_class} border-2 {border_color} rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity bg-[#2a2a2a]",
         )
 
 
@@ -283,13 +283,13 @@ def drop_target_augment() -> rx.Component:
         border="2px solid",
         border_color=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.500",
-            rx.cond(drop_params.is_over, "red.500", "transparent")
+            "#3DEB58",
+            rx.cond(drop_params.is_over, "#CB008A", "transparent")
         ),
         bg=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.50",
-            rx.cond(drop_params.is_over, "red.50", "transparent")
+            "rgba(61, 235, 88, 0.1)",
+            rx.cond(drop_params.is_over, "rgba(203, 0, 138, 0.1)", "transparent")
         ),
         border_radius="8px",
         width="fit-content",
@@ -316,13 +316,13 @@ def drop_target_shield() -> rx.Component:
         border="2px solid",
         border_color=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.500",
-            rx.cond(drop_params.is_over, "red.500", "transparent")
+            "#3DEB58",
+            rx.cond(drop_params.is_over, "#CB008A", "transparent")
         ),
         bg=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.50",
-            rx.cond(drop_params.is_over, "red.50", "transparent")
+            "rgba(61, 235, 88, 0.1)",
+            rx.cond(drop_params.is_over, "rgba(203, 0, 138, 0.1)", "transparent")
         ),
         border_radius="8px",
         width="fit-content",
@@ -353,13 +353,13 @@ def drop_target_weapon(position: int) -> rx.Component:
         border="2px solid",
         border_color=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.500",
-            rx.cond(drop_params.is_over, "red.500", "transparent")
+            "#3DEB58",
+            rx.cond(drop_params.is_over, "#CB008A", "transparent")
         ),
         bg=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.50",
-            rx.cond(drop_params.is_over, "red.50", "transparent")
+            "rgba(61, 235, 88, 0.1)",
+            rx.cond(drop_params.is_over, "rgba(203, 0, 138, 0.1)", "transparent")
         ),
         border_radius="8px",
         width="fit-content",
@@ -371,7 +371,7 @@ def equipment_section() -> rx.Component:
     return rx.el.div(
         rx.el.h3(
             "EQUIPMENT",
-            class_name="text-sm font-bold text-gray-700 mb-3 tracking-wide",
+            class_name="text-sm font-bold text-white mb-3 tracking-wide",
         ),
         rx.el.div(
             drop_target_augment(),
@@ -411,13 +411,13 @@ def drop_target_backpack_slot(position: int) -> rx.Component:
         border="2px solid",
         border_color=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.500",
-            rx.cond(drop_params.is_over, "red.500", "transparent")
+            "#3DEB58",
+            rx.cond(drop_params.is_over, "#CB008A", "transparent")
         ),
         bg=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.50",
-            rx.cond(drop_params.is_over, "red.50", "transparent")
+            "rgba(61, 235, 88, 0.1)",
+            rx.cond(drop_params.is_over, "rgba(203, 0, 138, 0.1)", "transparent")
         ),
         border_radius="8px",
         width="fit-content",
@@ -430,11 +430,11 @@ def backpack_section() -> rx.Component:
         rx.el.div(
             rx.el.h3(
                 "BACKPACK",
-                class_name="text-sm font-bold text-gray-700 tracking-wide",
+                class_name="text-sm font-bold text-white tracking-wide",
             ),
             rx.el.p(
                 f"{CalculatorState.loadout_backpack.length()}/{CalculatorState.max_backpack_slots}",
-                class_name="text-xs text-gray-500",
+                class_name="text-xs text-gray-400",
             ),
             class_name="flex items-center gap-2 mb-3",
         ),
@@ -488,13 +488,13 @@ def drop_target_quick_use_slot(position: int) -> rx.Component:
         border="2px solid",
         border_color=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.500",
-            rx.cond(drop_params.is_over, "red.500", "transparent")
+            "#3DEB58",
+            rx.cond(drop_params.is_over, "#CB008A", "transparent")
         ),
         bg=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.50",
-            rx.cond(drop_params.is_over, "red.50", "transparent")
+            "rgba(61, 235, 88, 0.1)",
+            rx.cond(drop_params.is_over, "rgba(203, 0, 138, 0.1)", "transparent")
         ),
         border_radius="8px",
         width="fit-content",
@@ -507,11 +507,11 @@ def quick_use_section() -> rx.Component:
         rx.el.div(
             rx.el.h3(
                 "QUICK USE",
-                class_name="text-sm font-bold text-gray-700 tracking-wide",
+                class_name="text-sm font-bold text-white tracking-wide",
             ),
             rx.el.p(
                 f"{CalculatorState.loadout_quick_use.length()}/{CalculatorState.max_quick_use_slots}",
-                class_name="text-xs text-gray-500",
+                class_name="text-xs text-gray-400",
             ),
             class_name="flex items-center gap-2 mb-3",
         ),
@@ -552,13 +552,13 @@ def drop_target_safe_pocket_slot(position: int) -> rx.Component:
         border="2px solid",
         border_color=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.500",
-            rx.cond(drop_params.is_over, "red.500", "transparent")
+            "#3DEB58",
+            rx.cond(drop_params.is_over, "#CB008A", "transparent")
         ),
         bg=rx.cond(
             drop_params.is_over & drop_params.can_drop,
-            "green.50",
-            rx.cond(drop_params.is_over, "red.50", "transparent")
+            "rgba(61, 235, 88, 0.1)",
+            rx.cond(drop_params.is_over, "rgba(203, 0, 138, 0.1)", "transparent")
         ),
         border_radius="8px",
         width="fit-content",
@@ -571,11 +571,11 @@ def safe_pocket_section() -> rx.Component:
         rx.el.div(
             rx.el.h3(
                 "SAFE POCKET",
-                class_name="text-sm font-bold text-gray-700 tracking-wide",
+                class_name="text-sm font-bold text-white tracking-wide",
             ),
             rx.el.p(
                 f"{CalculatorState.loadout_safe_pocket.length()}/{CalculatorState.max_safe_pocket_slots}",
-                class_name="text-xs text-gray-500",
+                class_name="text-xs text-gray-400",
             ),
             class_name="flex items-center gap-2 mb-3",
         ),
@@ -590,10 +590,10 @@ def safe_pocket_section() -> rx.Component:
                 ),
             ),
             rx.el.div(
-                rx.icon("lock", size=32, class_name="text-gray-300"),
+                rx.icon("lock", size=32, class_name="text-gray-600"),
                 rx.el.p(
                     "No safe pocket",
-                    class_name="text-xs text-gray-400 mt-2",
+                    class_name="text-xs text-gray-500 mt-2",
                 ),
                 class_name="flex flex-col items-center justify-center py-8",
             ),
@@ -612,6 +612,6 @@ def loadout_panel() -> rx.Component:
             safe_pocket_section(),
             class_name="flex flex-col gap-4 flex-[3]",
         ),
-        class_name="flex gap-4 px-4 py-6 w-full bg-white border-b border-gray-200 flex-1 overflow-y-auto",
+        class_name="flex gap-4 px-4 py-6 w-full bg-[#2a2a2a] border-b border-[#5D605D] flex-1 overflow-y-auto",
     )
 

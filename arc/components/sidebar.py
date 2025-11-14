@@ -8,7 +8,7 @@ def tooltip_wrapper(content: rx.Component, tooltip_text: str) -> rx.Component:
         content,
         rx.el.span(
             tooltip_text,
-            class_name="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-1 px-2 py-1 text-xs font-medium text-gray-800 bg-gray-300 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-75 delay-700 pointer-events-none z-50",
+            class_name="invisible group-hover:visible absolute bottom-full left-1/2 -translate-x-1/2 -translate-y-1 px-2 py-1 text-xs font-medium text-white bg-[#5D605D] rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-75 delay-700 pointer-events-none z-50",
         ),
         class_name="relative group inline-block",
     )
@@ -19,18 +19,18 @@ def resource_card(resource: ResourceDisplay) -> rx.Component:
     # Determine colors based on rarity using rx.match for reactive values
     text_color = rx.match(
         resource["rarity"],
-        ("Common", "font-semibold text-gray-700"),
-        ("Uncommon", "font-semibold text-green-600"),
-        ("Rare", "font-semibold text-blue-600"),
-        "font-semibold text-purple-600",
+        ("Common", "font-semibold text-white"),
+        ("Uncommon", "font-semibold text-[#3DEB58]"),
+        ("Rare", "font-semibold text-[#22BFFB]"),
+        "font-semibold text-[#CB008A]",
     )
     
     icon_color = rx.match(
         resource["rarity"],
-        ("Common", "text-gray-700"),
-        ("Uncommon", "text-green-600"),
-        ("Rare", "text-blue-600"),
-        "text-purple-600",
+        ("Common", "text-white"),
+        ("Uncommon", "text-[#3DEB58]"),
+        ("Rare", "text-[#22BFFB]"),
+        "text-[#CB008A]",
     )
     
     # Check if this resource is decomposed (reactive)
@@ -68,7 +68,7 @@ def resource_card(resource: ResourceDisplay) -> rx.Component:
                             size=14,
                         ),
                         on_click=lambda: CalculatorState.toggle_decompose_resource(resource["id"]),
-                        class_name="px-2 py-1 text-xs rounded hover:bg-gray-200 transition-colors text-gray-500",
+                        class_name="px-2 py-1 text-xs rounded hover:bg-[#5D605D] transition-colors text-gray-400",
                     ),
                     "Expand",
                 ),
@@ -76,11 +76,11 @@ def resource_card(resource: ResourceDisplay) -> rx.Component:
             ),
             rx.el.p(
                 resource["quantity"],
-                class_name="text-lg font-bold text-gray-800",
+                class_name="text-lg font-bold text-white",
             ),
             class_name="flex items-center justify-between gap-2",
         ),
-        class_name="p-4 bg-white rounded-lg border border-gray-200",
+        class_name="p-4 bg-[#1a1a1a] rounded-lg border border-[#5D605D]",
     )
 
 
@@ -100,12 +100,12 @@ def decomposed_resource_card(resource: ResourceDisplay) -> rx.Component:
                     rx.icon(
                         "package",
                         size=36,
-                        class_name="text-gray-400",
+                        class_name="text-gray-600",
                     ),
                 ),
                 rx.el.p(
                     resource["name"],
-                    class_name="font-semibold text-gray-400",
+                    class_name="font-semibold text-gray-600",
                 ),
                 class_name="flex items-center gap-3 flex-1",
             ),
@@ -116,17 +116,17 @@ def decomposed_resource_card(resource: ResourceDisplay) -> rx.Component:
                         size=14,
                     ),
                     on_click=lambda: CalculatorState.toggle_decompose_resource(resource["id"]),
-                    class_name="px-2 py-1 text-xs rounded hover:bg-gray-200 transition-colors text-gray-500",
+                    class_name="px-2 py-1 text-xs rounded hover:bg-[#5D605D] transition-colors text-gray-500",
                 ),
                 "Collapse",
             ),
             rx.el.p(
                 resource["quantity"],
-                class_name="text-lg font-bold text-gray-400",
+                class_name="text-lg font-bold text-gray-600",
             ),
             class_name="flex items-center justify-between gap-2",
         ),
-        class_name="p-4 bg-gray-50 rounded-lg border border-gray-200",
+        class_name="p-4 bg-[#2a2a2a] rounded-lg border border-[#5D605D]",
     )
 
 
@@ -135,17 +135,17 @@ def resource_summary_sidebar(width_class: str = "w-1/4") -> rx.Component:
     return rx.el.aside(
         rx.el.div(
             rx.el.h2(
-                "Required Resources", class_name="text-xl font-bold text-gray-800"
+                "Required Resources", class_name="text-xl font-bold text-white"
             ),
             rx.el.p(
-                "Expand refined resources to view crafting materials.", class_name="text-sm text-gray-500 mt-1"
+                "Expand refined resources to view crafting materials.", class_name="text-sm text-gray-400 mt-1"
             ),
             rx.el.div(
                 rx.el.button(
                     rx.icon("trash-2", size=14, class_name="mr-2"),
                     "Clear Loadout",
                     on_click=CalculatorState.clear_selection,
-                    class_name="flex-1 flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors",
+                    class_name="flex-1 flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#5D605D] rounded-lg hover:bg-[#CB008A] transition-colors",
                 ),
                 class_name="mt-4 w-full flex gap-2",
             ),
@@ -154,7 +154,7 @@ def resource_summary_sidebar(width_class: str = "w-1/4") -> rx.Component:
                     rx.icon("git-branch", size=14, class_name="mr-2"),
                     "Expand All",
                     on_click=CalculatorState.decompose_all_resources,
-                    class_name="flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors",
+                    class_name="flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-white bg-[#1a1a1a] border border-[#5D605D] rounded-lg hover:bg-[#2a2a2a] transition-colors",
                 ),
                 rx.el.button(
                     rx.icon("rotate-ccw", size=14, class_name="mr-2"),
@@ -163,13 +163,13 @@ def resource_summary_sidebar(width_class: str = "w-1/4") -> rx.Component:
                     disabled=~CalculatorState.has_decomposed_resources,
                     class_name=rx.cond(
                         CalculatorState.has_decomposed_resources,
-                        "flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors",
-                        "flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-gray-400 bg-gray-100 border border-gray-200 rounded-lg cursor-not-allowed"
+                        "flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-white bg-[#1a1a1a] border border-[#5D605D] rounded-lg hover:bg-[#2a2a2a] transition-colors",
+                        "flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-gray-600 bg-[#2a2a2a] border border-[#5D605D] rounded-lg cursor-not-allowed"
                     ),
                 ),
                 class_name="mt-2 w-full flex gap-2",
             ),
-            class_name="p-6 border-b border-gray-200",
+            class_name="p-6 border-b border-[#5D605D]",
         ),
         rx.el.div(
             rx.cond(
@@ -185,10 +185,10 @@ def resource_summary_sidebar(width_class: str = "w-1/4") -> rx.Component:
                     rx.cond(
                         CalculatorState.decomposed_resources_display.length() > 0,
                         rx.el.div(
-                            rx.el.hr(class_name="border-gray-300 my-6"),
+                            rx.el.hr(class_name="border-[#5D605D] my-6"),
                             rx.el.h3(
                                 "Expanded Resources",
-                                class_name="text-sm font-bold text-gray-500 uppercase tracking-wide mb-3",
+                                class_name="text-sm font-bold text-gray-400 uppercase tracking-wide mb-3",
                             ),
                             rx.el.div(
                                 rx.foreach(
@@ -203,18 +203,18 @@ def resource_summary_sidebar(width_class: str = "w-1/4") -> rx.Component:
                     class_name="p-6",
                 ),
                 rx.el.div(
-                    rx.icon("list-x", size=48, class_name="text-gray-300"),
+                    rx.icon("list-x", size=48, class_name="text-gray-600"),
                     rx.el.p(
-                        "No items in loadout", class_name="text-gray-500 font-medium mt-4"
+                        "No items in loadout", class_name="text-gray-400 font-medium mt-4"
                     ),
                     rx.el.p(
                         "Add items to your loadout to see resource costs.",
-                        class_name="text-gray-400 text-sm",
+                        class_name="text-gray-500 text-sm",
                     ),
                     class_name="flex flex-col items-center justify-center h-full text-center p-6",
                 ),
             ),
             class_name="flex-grow overflow-y-auto",
         ),
-        class_name=f"{width_class} bg-gray-50 border-l border-gray-200 flex-shrink-0 flex flex-col h-screen sticky top-0",
+        class_name=f"{width_class} bg-[#1a1a1a] border-l border-[#5D605D] flex-shrink-0 flex flex-col h-screen sticky top-0",
     )

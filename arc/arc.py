@@ -13,11 +13,11 @@ def page_header() -> rx.Component:
             rx.el.div(
                 rx.el.h1(
                     "Arc Raiders Loadout Calculator",
-                    class_name="text-2xl font-bold text-gray-900",
+                    class_name="text-2xl font-bold text-white",
                 ),
                 rx.el.p(
                     "Plan your loadouts and calculate resource requirements",
-                    class_name="text-sm text-gray-600 mt-1",
+                    class_name="text-sm text-gray-300 mt-1",
                 ),
                 class_name="flex-1",
             ),
@@ -26,23 +26,23 @@ def page_header() -> rx.Component:
                     "Arc Raiders Wiki",
                     href="https://arc-raiders.wiki",
                     target="_blank",
-                    class_name="text-sm font-medium text-sky-600 hover:text-sky-700 hover:underline",
+                    class_name="text-sm font-medium text-[#22BFFB] hover:text-[#3DEB58] hover:underline",
                 ),
                 rx.el.span(
                     "•",
-                    class_name="text-gray-400 mx-3",
+                    class_name="text-gray-500 mx-3",
                 ),
                 rx.el.a(
                     "Weapon DPS & TTK",
                     href="https://arc-raiders-dps.com",
                     target="_blank",
-                    class_name="text-sm font-medium text-sky-600 hover:text-sky-700 hover:underline",
+                    class_name="text-sm font-medium text-[#22BFFB] hover:text-[#3DEB58] hover:underline",
                 ),
                 class_name="flex items-center",
             ),
             class_name="flex items-center justify-between",
         ),
-        class_name="w-full bg-white border-b border-gray-200 px-8 py-4",
+        class_name="w-full bg-[#1a1a1a] border-b border-[#5D605D] px-8 py-4",
     )
 
 
@@ -50,7 +50,7 @@ def preset_button(text: str, on_click: rx.event.EventType) -> rx.Component:
     return rx.el.button(
         text,
         on_click=on_click,
-        class_name="px-3 py-1.5 text-xs font-semibold text-sky-700 bg-sky-100 rounded-md hover:bg-sky-200 transition-colors",
+        class_name="px-3 py-1.5 text-xs font-semibold text-white bg-[#22BFFB] rounded-md hover:bg-[#3DEB58] transition-colors",
     )
 
 
@@ -77,15 +77,15 @@ def index() -> rx.Component:
                 class_name=f"flex flex-col {main_content_width}",
             ),
             resource_summary_sidebar(width_class=sidebar_width),
-            class_name="flex flex-1 bg-white font-['Roboto'] overflow-hidden",
+            class_name="flex flex-1 bg-[#2a2a2a] font-['Roboto'] overflow-hidden",
         ),
-        class_name="flex flex-col h-screen bg-white font-['Roboto']",
+        class_name="flex flex-col h-screen bg-[#2a2a2a] font-['Roboto']",
         ),
     )
 
 
 app = rxe.App(
-    theme=rx.theme(appearance="light"),
+    theme=rx.theme(appearance="dark"),
     head_components=[
         rx.el.link(rel="preconnect", href="https://fonts.googleapis.com"),
         rx.el.link(rel="preconnect", href="https://fonts.gstatic.com", cross_origin=""),

@@ -16,8 +16,8 @@ def tier_selector(item_id: str) -> rx.Component:
                 ),
                 class_name=rx.cond(
                     selected_tier == index + 1,
-                    "w-8 h-8 text-xs font-bold text-white bg-sky-500 rounded-md",
-                    "w-8 h-8 text-xs font-semibold text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300",
+                    "w-8 h-8 text-xs font-bold text-white bg-[#22BFFB] rounded-md",
+                    "w-8 h-8 text-xs font-semibold text-white bg-[#5D605D] rounded-md hover:bg-[#3DEB58]",
                 ),
                 size="1",
             ),
